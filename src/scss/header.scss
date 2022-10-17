@@ -1,0 +1,33 @@
+#header {
+  border-bottom: 1px solid rgba(160, 35, 9, 0.2);
+  box-shadow: 0 0 20px #46211a;
+}
+.header_wrap {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 -15px;
+  &-logo {
+    color: #693d3d;
+    margin: 0 15px;
+    font-weight: 600;
+    font-family: 'Exo 2', sans-serif;
+  }
+  &-name {
+    color: #693d3d;
+    margin: 0 15px;
+    font-weight: 600;
+    font-family: 'Exo 2', sans-serif;
+  }
+  &-date {
+    color: #693d3d;
+    margin: 0 15px;
+    font-weight: 600;
+    font-family: 'Exo 2', sans-serif;
+  }
+}
+.header_logo {
+}
+.header_date {
+}

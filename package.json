@@ -1,0 +1,30 @@
+{
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.7.0",
+    "parcel": "latest"
+  },
+  "dependencies": {
+    "gulp-concat-css": "^3.1.0",
+    "sass": "^1.55.0",
+    "server": "^1.0.37"
+  },
+  "name": "my_todo_list",
+  "description": "ToDo list",
+  "version": "1.0.0",
+  "source": "src/index.html",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eccom18/My_ToDo_List.git"
+  },
+  "author": "Vlad_Henrykh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eccom18/My_ToDo_List/issues"
+  },
+  "homepage": "https://github.com/eccom18/My_ToDo_List#readme"
+}
