@@ -1,5 +1,7 @@
 @import '../scss/fonts.scss';
 @import '../scss/header.scss';
+@import '../scss/columns.scss';
+@import '../scss/form.scss';
 * {
   margin: 0;
   padding: 0;
@@ -7,6 +9,7 @@
   box-sizing: border-box;
   list-style: none;
 }
+
 .container {
   max-width: 1170px;
   margin: auto;
@@ -14,4 +17,7 @@
 }
 html {
   font-family: 'Raleway', 'Exo 2', sans-serif;
+}
+body.lock {
+  overflow: hidden;
 }
