@@ -13,7 +13,7 @@
         <form action="#" class="todo_form">
           <div class="form_head">
             <h2 class="form_alarm">Fill in all the fields</h2>
-            <i class="fa-regular fa-circle-xmark"></i>
+            <i class="fa-regular fa-circle-xmark popUp"></i>
           </div>
           <div class="form_content">
             <label for="form_title">Title:</label>
@@ -40,8 +40,8 @@
               minlength="3"
             />
           </div>
-          <button class="create">Create</button>
-          <button class="cancel">Cancel</button>
+          <button class="create popUp">Create</button>
+          <button class="cancel popUp">Cancel</button>
         </form>
       </div>
     </section>
@@ -61,64 +61,13 @@
             <div class="todo_column">
               <div class="todo_column-name">
                 <h3 class="name">New task</h3>
-                <i class="fa-solid fa-plus popupOpen"></i
+                <i class="fa-solid fa-plus popUp"></i
                 ><i class="fa-sharp fa-solid fa-trash remove_all"></i>
               </div>
               <div class="todo_column-total">
                 <span>Total:</span><span class="new_total">0</span>
               </div>
-              <div class="todo_column-list">
-                <div class="todo_card">
-                  <div class="todo_card-title">Title</div>
-                  <div class="todo_card-description">descritpion</div>
-                  <div class="todo_card-executor">
-                    <span class="execuor_name">name</span>
-                    <span class="delete"
-                      ><i class="fa-sharp fa-solid fa-trash"></i
-                    ></span>
-                  </div>
-                </div>
-                <div class="todo_card">
-                  <div class="todo_card-title">Title</div>
-                  <div class="todo_card-description">descritpion</div>
-                  <div class="todo_card-executor">
-                    <span class="execuor_name">name</span>
-                    <span class="delete"
-                      ><i class="fa-sharp fa-solid fa-trash"></i
-                    ></span>
-                  </div>
-                </div>
-                <div class="todo_card">
-                  <div class="todo_card-title">Title</div>
-                  <div class="todo_card-description">descritpion</div>
-                  <div class="todo_card-executor">
-                    <span class="execuor_name">name</span>
-                    <span class="delete"
-                      ><i class="fa-sharp fa-solid fa-trash"></i
-                    ></span>
-                  </div>
-                </div>
-                <div class="todo_card">
-                  <div class="todo_card-title">Title</div>
-                  <div class="todo_card-description">descritpion</div>
-                  <div class="todo_card-executor">
-                    <span class="execuor_name">name</span>
-                    <span class="delete"
-                      ><i class="fa-sharp fa-solid fa-trash"></i
-                    ></span>
-                  </div>
-                </div>
-                <div class="todo_card">
-                  <div class="todo_card-title">Title</div>
-                  <div class="todo_card-description">descritpion</div>
-                  <div class="todo_card-executor">
-                    <span class="execuor_name">name</span>
-                    <span class="delete"
-                      ><i class="fa-sharp fa-solid fa-trash"></i
-                    ></span>
-                  </div>
-                </div>
-              </div>
+              <div class="todo_column-list"></div>
             </div>
             <div class="todo_column">
               <div class="todo_column-name">
@@ -126,20 +75,9 @@
                 <i class="fa-sharp fa-solid fa-trash remove_all"></i>
               </div>
               <div class="todo_column-total">
-                <span>Total:</span><span class="new_total">0</span>
+                <span>Total:</span><span class="progress_total">0</span>
               </div>
-              <div class="todo_column-list">
-                <div class="todo_card">
-                  <div class="todo_card-title">Title</div>
-                  <div class="todo_card-description">descritpion</div>
-                  <div class="todo_card-executor">
-                    <span class="execuor_name">name</span>
-                    <span class="delete"
-                      ><i class="fa-sharp fa-solid fa-trash"> </i
-                    ></span>
-                  </div>
-                </div>
-              </div>
+              <div class="todo_column-list"></div>
             </div>
             <div class="todo_column">
               <div class="todo_column-name">
@@ -147,20 +85,9 @@
                 <i class="fa-sharp fa-solid fa-trash delete_all"></i>
               </div>
               <div class="todo_column-total">
-                <span>Total:</span><span class="new_total">0</span>
+                <span>Total:</span><span class="done_total">0</span>
               </div>
-              <div class="todo_column-list">
-                <div class="todo_card">
-                  <div class="todo_card-title">Title</div>
-                  <div class="todo_card-description">descritpion</div>
-                  <div class="todo_card-executor">
-                    <span class="execuor_name">name</span>
-                    <span class="delete"
-                      ><i class="fa-sharp fa-solid fa-trash"></i
-                    ></span>
-                  </div>
-                </div>
-              </div>
+              <div class="todo_column-list"></div>
             </div>
           </div>
         </div>
