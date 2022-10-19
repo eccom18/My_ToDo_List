@@ -53,6 +53,37 @@ let getRender = () => {
   }
 }
 
+let restart = () => {
+  let fromRest = localStorage.getItem('card')
+  let restFrom = JSON.parse(fromRest)
+  let createCard1 = (el1) => {
+    let newCard1 = `
+      <div class="todo_card">
+        <div class="todo_card-title">${el1.title}</div>
+        <div class="todo_card-description">${el1.descr}</div>
+        <div class="todo_card-executor">
+          <span class="execuor_name">${el1.author}</span>
+          <span class="delete"
+          ><i class="fa-sharp fa-solid fa-trash"></i
+        ></span>
+        </div>
+      </div>
+      `
+    $COLUMNLIST.innerHTML += newCard1
+  }
+
+  let restSort = (restFrom) => {
+    restFrom.forEach((el1) => {
+      createCard1(el1)
+    })
+  }
+  if (restFrom) {
+    restSort(restFrom)
+  }
+}
+
+restart()
+
 //перебираем массив и делаем карточку
 let sortArr = (dataFrom) => {
   $COLUMNLIST.innerHTML = ''
