@@ -10,6 +10,7 @@ const $DESCRIPTIONINP = document.querySelector('.description_textarea')
 const $AUTHOR = document.querySelector('.executor_input')
 const $COLUMNLIST = document.querySelector('.todo_column-list')
 const $CREATEBTN = document.querySelector('.create')
+const $NEWTOTAL = document.querySelector('.new_total')
 
 let cardArr = []
 
@@ -28,13 +29,23 @@ $CREATEBTN.addEventListener('click', (e) => {
   firstArr()
   render()
   getRender()
+  // del()
 
   $NEWTOTAL.textContent = cardArr.length
   $TITLEINP.value = ''
   $DESCRIPTIONINP.value = ''
   $AUTHOR.value = ''
-  $NEWTOTAL.textContent = cardArr.length
 })
+
+//создаём новый обьект и пушим его в массив
+let firstArr = () => {
+  function CreateObj(title, descr, author) {
+    this.title = $TITLEINP.value
+    this.descr = $DESCRIPTIONINP.value
+    this.author = $AUTHOR.value
+  }
+  cardArr.push(new CreateObj())
+}
 
 //пушим созданный массив в локал
 let render = () => {
@@ -49,11 +60,12 @@ let getRender = () => {
   if (dataFrom) {
     sortArr(dataFrom)
   } else {
-    console.log('что то не так')
+    $COLUMNLIST.innerHTML = ''
   }
 }
 
 let restart = () => {
+  $COLUMNLIST.innerHTML = ''
   let fromRest = localStorage.getItem('card')
   let restFrom = JSON.parse(fromRest)
   let createCard1 = (el1) => {
@@ -64,24 +76,26 @@ let restart = () => {
         <div class="todo_card-executor">
           <span class="execuor_name">${el1.author}</span>
           <span class="delete"
-          ><i class="fa-sharp fa-solid fa-trash"></i
+          ><i class="fa-sharp fa-solid fa-trash card_delete"></i
         ></span>
         </div>
       </div>
       `
     $COLUMNLIST.innerHTML += newCard1
   }
-
   let restSort = (restFrom) => {
     restFrom.forEach((el1) => {
       createCard1(el1)
+      cardArr.push(el1)
+      $NEWTOTAL.textContent = cardArr.length
     })
   }
   if (restFrom) {
     restSort(restFrom)
+  } else {
+    $COLUMNLIST.innerHTML = ''
   }
 }
-
 restart()
 
 //перебираем массив и делаем карточку
@@ -99,7 +113,7 @@ let createCard = (el) => {
       <div class="todo_card-description">${el.descr}</div>
       <div class="todo_card-executor">
         <span class="execuor_name">${el.author}</span>
-        <span class="delete"
+        <span class="card_delete"
         ><i class="fa-sharp fa-solid fa-trash"></i
       ></span>
       </div>
@@ -108,14 +122,15 @@ let createCard = (el) => {
   $COLUMNLIST.innerHTML += newCard
 }
 
-//создаём новый обьект и пушим его в массив
-let firstArr = () => {
-  function CreateObj(title, descr, author) {
-    this.title = $TITLEINP.value
-    this.descr = $DESCRIPTIONINP.value
-    this.author = $AUTHOR.value
-  }
-  cardArr.push(new CreateObj())
-}
 // выводим тотал
-const $NEWTOTAL = document.querySelector('.new_total')
+
+// let del = (el) => {
+//   const $DEL = document.querySelectorAll('.card_delete')
+//   for (let i = 0; i < $DEL.length; i++) {
+//     console.log($DEL[i])
+//     $DEL[i].addEventListener('click', (e) => {
+//       localStorage.clear()
+//       console.log(e.target)
+//     })
+//   }
+// }
