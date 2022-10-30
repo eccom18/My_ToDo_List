@@ -8,14 +8,50 @@ const $POPUPOPEN = document.querySelectorAll('.popUp')
 const $TITLEINP = document.querySelector('.title_input')
 const $DESCRIPTIONINP = document.querySelector('.description_textarea')
 const $AUTHOR = document.querySelector('.executor_input')
-const $COLUMNLIST = document.querySelector('.todo_column-list')
+const $NEWCOLUMNLIST = document.querySelector('.new_column')
 const $CREATEBTN = document.querySelector('.create')
 const $NEWTOTAL = document.querySelector('.new_total')
-const $PROGRCOL = document.querySelector('todo_column-listProgr')
+const $PROGRCOL = document.querySelector('.progr_column')
+const $PROGRTOTAL = document.querySelector('.progress_total')
+const $DONECOL = document.querySelector('.done_column')
+const $DONETOTAL = document.querySelector('.done_total')
+
 let del
 let remove
+let delete_prog
+let removeLeft
+let removeRight
+let removeLeftDone
+let delete_done
 let cardArr = JSON.parse(localStorage.getItem('card')) || []
-let progressCard = JSON.parse(localStorage.getItem('card')) || []
+let progressArr = JSON.parse(localStorage.getItem('prog')) || []
+let doneArr = JSON.parse(localStorage.getItem('done')) || []
+document.querySelector('.delete_all_new').addEventListener('click', (e) => {
+  cardArr = []
+  localPush()
+  restart()
+})
+document.querySelector('.delete_all_prog').addEventListener('click', (e) => {
+  progressArr = []
+  localProg()
+  restart()
+})
+document.querySelector('.delete_all_done').addEventListener('click', (e) => {
+  doneArr = []
+  localDone()
+  restart()
+})
+
+let total = () => {
+  $NEWTOTAL.textContent = cardArr.length
+  $PROGRTOTAL.textContent = progressArr.length
+  $DONETOTAL.textContent = doneArr.length
+}
+let clear = () => {
+  $TITLEINP.value = ''
+  $DESCRIPTIONINP.value = ''
+  $AUTHOR.value = ''
+}
 
 let createCard = (el) => {
   let newCard = `
@@ -24,7 +60,7 @@ let createCard = (el) => {
       <div class="todo_card-description">${el.descr}</div>
       <div class="todo_card-executor">
         <span class="execuor_name">${el.author}</span>
-        <i class="fa-solid fa-arrow-right remove"></i>
+        <i class="fa-solid fa-arrow-right remove-prog"></i>
         <span class="card_delete"
         ><i class="fa-sharp fa-solid fa-trash"></i
       >
@@ -32,7 +68,44 @@ let createCard = (el) => {
       </div>
     </div>
     `
-  $COLUMNLIST.innerHTML += newCard
+  $NEWCOLUMNLIST.innerHTML += newCard
+}
+
+let ProgressCard = (el1) => {
+  let progCard = `
+  <div class="todo_card">
+    <div class="todo_card-title">${el1.title}</div>
+    <div class="todo_card-description">${el1.descr}</div>
+    <div class="todo_card-executor">
+      <span class="execuor_name">${el1.author}</span>
+      <i class="fa-solid fa-arrow-left remove-left"></i>
+      <i class="fa-solid fa-arrow-right remove-right"></i>
+      <span class="delete_prog"
+      ><i class="fa-sharp fa-solid fa-trash"></i
+    >
+    </span>
+    </div>
+  </div>
+  `
+  $PROGRCOL.innerHTML += progCard
+}
+
+let doneCard = (el2) => {
+  let lastCard = `
+  <div class="todo_card">
+    <div class="todo_card-title">${el2.title}</div>
+    <div class="todo_card-description">${el2.descr}</div>
+    <div class="todo_card-executor">
+      <span class="execuor_name">${el2.author}</span>
+      <i class="fa-solid fa-arrow-left remove-left_done"></i>
+      <span class="delete_done"
+      ><i class="fa-sharp fa-solid fa-trash"></i
+    >
+    </span>
+    </div>
+  </div>
+  `
+  $DONECOL.innerHTML += lastCard
 }
 
 //создаём новый обьект и пушим его в массив
@@ -46,83 +119,145 @@ let firstArr = () => {
 }
 
 //пушим созданный массив в локал
-let render = () => {
+let localPush = () => {
   let cardToJson = JSON.stringify(cardArr)
   localStorage.setItem('card', cardToJson)
 }
+let localProg = () => {
+  let cardToJson = JSON.stringify(progressArr)
+  localStorage.setItem('prog', cardToJson)
+}
+let localDone = () => {
+  let cardToJson = JSON.stringify(doneArr)
+  localStorage.setItem('done', cardToJson)
+}
 
-//распарсим массив
+//рендерим карточку
 let getRender = () => {
   if (cardArr) {
     sortArr(cardArr)
   } else {
-    $COLUMNLIST.innerHTML = ''
+    $NEWCOLUMNLIST.innerHTML = ''
   }
 }
 
-//добавление карточки
+//попап
 for (let i = 0; i < $POPUPOPEN.length; i++) {
   $POPUPOPEN[i].addEventListener('click', (e) => {
     $POPUP.classList.toggle('open')
     $BODY.classList.toggle('lock')
   })
 }
-//перебираем массив и делаем карточку
+//перебираем массив и вызываем
 let sortArr = (cardArr) => {
-  $COLUMNLIST.innerHTML = ''
+  $NEWCOLUMNLIST.innerHTML = ''
   cardArr.forEach((el) => {
     createCard(el)
   })
 }
+let sortProg = (progressArr) => {
+  $PROGRCOL.innerHTML = ''
+  progressArr.forEach((el1) => {
+    ProgressCard(el1)
+  })
+}
+let sortDone = (doneArr) => {
+  $DONECOL.innerHTML = ''
+  doneArr.forEach((el2) => {
+    doneCard(el2)
+  })
+}
 
-// устанавливает дата-атрибуты
+// удаляет карточку по клику
 
 function datasetCard() {
-  del = document.querySelectorAll('.card_delete')
+  let del = document.querySelectorAll('.card_delete')
   for (let i = 0; i < del.length; i++) {
     del[i].addEventListener('click', (e) => {
       cardArr.splice(i, 1)
-      render()
+      localPush()
       restart()
     })
   }
-  // remove = document.querySelectorAll('.remove')
-  // for (let k = 0; k < remove.length; k++) {
-  //   remove[k].addEventListener('click', (event) => {
-  //     progressCard.push(cardArr.slice(k, 1))
-  //     progressCard.forEach((el) => {
-  //       let gth = `
-  //     <div class="todo_card">
-  //       <div class="todo_card-title">${el.title}</div>
-  //       <div class="todo_card-description">${el.descr}</div>
-  //       <div class="todo_card-executor">
-  //         <span class="execuor_name">${el.author}</span>
-  //         <i class="fa-solid fa-arrow-right remove"></i>
-  //         <span class="card_delete"
-  //         ><i class="fa-sharp fa-solid fa-trash"></i
-  //       >
-  //       </span>
-  //       </div>
-  //     </div>
-  //     `
-  //       // $PROGRCOL.innerHTML += gth
-  //     })
-  //   })
-  //   console.log(el)
-  // }
+  let remove = document.querySelectorAll('.remove-prog')
+  for (let k = 0; k < remove.length; k++) {
+    remove[k].addEventListener('click', (event) => {
+      progressArr.push(cardArr[k])
+      sortProg(progressArr)
+      cardArr.splice(k, 1)
+      localProg()
+      localPush()
+      restart()
+    })
+  }
+}
+
+function progMove() {
+  let delete_prog = document.querySelectorAll('.delete_prog')
+  for (let i = 0; i < delete_prog.length; i++) {
+    delete_prog[i].addEventListener('click', (e) => {
+      progressArr.splice(i, 1)
+      localProg()
+      restart()
+    })
+  }
+  let removeLeft = document.querySelectorAll('.remove-left')
+  for (let j = 0; j < removeLeft.length; j++) {
+    removeLeft[j].addEventListener('click', (e) => {
+      cardArr.push(progressArr[j])
+      sortArr(cardArr)
+      progressArr.splice(j, 1)
+      localPush()
+      localProg()
+      restart()
+    })
+  }
+  let removeRight = document.querySelectorAll('.remove-right')
+  for (let k = 0; k < removeRight.length; k++) {
+    removeRight[k].addEventListener('click', (e) => {
+      doneArr.push(progressArr[k])
+      sortDone(doneArr)
+      progressArr.splice(k, 1)
+      localDone()
+      localProg()
+      restart()
+    })
+  }
+}
+
+function doneMove() {
+  let delete_done = document.querySelectorAll('.delete_done')
+  for (let i = 0; i < delete_done.length; i++) {
+    delete_done[i].addEventListener('click', (e) => {
+      doneArr.splice(i, 1)
+      localDone()
+      restart()
+    })
+  }
+  let removeLeftDone = document.querySelectorAll('.remove-left_done')
+  for (let k = 0; k < removeLeftDone.length; k++) {
+    removeLeftDone[k].addEventListener('click', (e) => {
+      progressArr.push(doneArr[k])
+      sortProg(progressArr)
+      doneArr.splice(k, 1)
+      localDone()
+      localProg()
+      restart()
+    })
+  }
 }
 
 // верстка карточки по клику
 $CREATEBTN.addEventListener('click', (e) => {
   e.preventDefault()
   firstArr()
-  render()
+  localPush()
   getRender()
   datasetCard()
+  progMove()
+  doneMove()
   $NEWTOTAL.textContent = cardArr.length
-  $TITLEINP.value = ''
-  $DESCRIPTIONINP.value = ''
-  $AUTHOR.value = ''
+  clear()
 })
 
 //вывод карточек после рестарта
@@ -130,10 +265,14 @@ $CREATEBTN.addEventListener('click', (e) => {
 let restart = () => {
   if (cardArr) {
     sortArr(cardArr)
+    sortProg(progressArr)
+    sortDone(doneArr)
   } else {
-    $COLUMNLIST.innerHTML = ''
+    $NEWCOLUMNLIST.innerHTML = ''
   }
-  $NEWTOTAL.textContent = cardArr.length
+  total()
+  doneMove()
   datasetCard()
+  progMove()
 }
 restart()
