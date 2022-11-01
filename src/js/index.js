@@ -1,7 +1,6 @@
 'use strict'
-import timer from './header'
+import timer from './header.js'
 timer()
-//открытие попап
 const $POPUP = document.querySelector('#form_section')
 const $BODY = document.querySelector('body')
 const $POPUPOPEN = document.querySelectorAll('.popUp')
@@ -108,14 +107,20 @@ let doneCard = (el2) => {
   $DONECOL.innerHTML += lastCard
 }
 
-//создаём новый обьект и пушим его в массив
+// создаём новый обьект и пушим его в массив
 let firstArr = () => {
   function CreateObj(title, descr, author) {
     this.title = $TITLEINP.value
     this.descr = $DESCRIPTIONINP.value
     this.author = $AUTHOR.value
   }
-  cardArr.push(new CreateObj())
+  if ($TITLEINP.value > 1 && $DESCRIPTIONINP.value > 1 && $AUTHOR.value > 1) {
+    cardArr.push(new CreateObj())
+  } else {
+    alert('Введите больше символов')
+    $POPUP.classList.toggle('open')
+    $BODY.classList.toggle('lock')
+  }
 }
 
 //пушим созданный массив в локал
@@ -146,9 +151,10 @@ for (let i = 0; i < $POPUPOPEN.length; i++) {
   $POPUPOPEN[i].addEventListener('click', (e) => {
     $POPUP.classList.toggle('open')
     $BODY.classList.toggle('lock')
+    window.scrollTo(0, 0)
   })
 }
-//перебираем массив и вызываем
+//перебираем массив и вызываем карточку
 let sortArr = (cardArr) => {
   $NEWCOLUMNLIST.innerHTML = ''
   cardArr.forEach((el) => {
